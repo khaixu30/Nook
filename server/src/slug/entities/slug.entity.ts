@@ -7,8 +7,8 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
-import {Nook} from "../../nook/entities/nook.entity.js";
-import {User} from "../../user/entities/user.entity.js";
+import { Nook } from "../../nook/entities/nook.entity.js";
+import { User } from "../../user/entities/user.entity.js";
 
 @Entity()
 export class Slug {
@@ -24,16 +24,14 @@ export class Slug {
     @Column()
     userId?: string;
 
-    @Column()
     @CreateDateColumn()
     createdAt: Date;
 
-    @Column()
     @UpdateDateColumn()
     updatedAt: Date;
 
     @OneToMany(() => Nook, (nook) => nook.slug)
-    nooks: Nook[]
+    nooks: Nook[];
 
     @ManyToOne(() => User, (user) => user.slugs)
     user: User;

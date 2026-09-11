@@ -2,51 +2,46 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
-    UpdateDateColumn
+    Relation,
+    Unique,
+    UpdateDateColumn,
 } from "typeorm";
-import {User} from "../../user/entities/user.entity.js";
-import {Slug} from "../../slug/entities/slug.entity.js";
+import { User } from "../../user/entities/user.entity.js";
 
-@Entity()
-export class Nook{
+@Entity('nooks')
+@Unique(['user', 'slug'])
+export class Nook {
     @PrimaryGeneratedColumn('uuid')
     id?: string;
+
+    @ManyToOne(() => User, (user) => user.nooks, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'user_id' })
+    user: Relation<User>;
 
     @Column()
     name?: string;
 
     @Column()
-    userId?: string;
+    slug?: string;
 
-    @Column()
-    sludId?: string;
-
-    @Column()
+    @Column({ nullable: true })
     description?: string;
 
-    @Column()
+    @Column({ nullable: true })
     contentUrl?: string;
 
-    @Column()
+    @Column({ nullable: true })
     clickToViewUrl?: string;
 
-    @Column()
+    @Column({ default: false })
     isPublic?: boolean;
 
-    @Column()
-    @CreateDateColumn()
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 
-    @Column()
-    @UpdateDateColumn()
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
-
-    @ManyToOne(() => User, (user) => user.nooks)
-    user: User;
-
-    @ManyToOne(() => Slug, (slug) => slug.nooks)
-    slug: Slug;
 }

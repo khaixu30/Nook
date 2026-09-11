@@ -13,7 +13,7 @@ import {ConfigService} from "@nestjs/config";
                 username: configService.getOrThrow('POSTGRES_USER'),
                 password: configService.getOrThrow('POSTGRES_PASSWORD'),
                 autoLoadEntities: true,
-                synchronize: (configService.getOrThrow('MODE') === 'DEV'), // true for neon
+                synchronize: true,  // false for neondb
             }),
             inject: [ConfigService],
         })
