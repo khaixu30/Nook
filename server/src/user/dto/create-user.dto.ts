@@ -10,11 +10,11 @@ export class createUserDto {
     @MinLength(8)
     @IsStrongPassword()
     password: string;
+    password_confirmation: string;
 
     @IsString()
     @IsNotEmpty()
-    @MinLength(8)
+    @MinLength(5)
     @MaxLength(20)
     username: string;
-    password_confirmation: string;
 }

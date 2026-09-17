@@ -7,6 +7,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
+import type { Relation } from "typeorm";
 import { Nook } from "../../nook/entities/nook.entity.js";
 import { User } from "../../user/entities/user.entity.js";
 
@@ -31,8 +32,8 @@ export class Slug {
     updatedAt: Date;
 
     @OneToMany(() => Nook, (nook) => nook.slug)
-    nooks: Nook[];
+    nooks: Relation<Nook[]>;
 
     @ManyToOne(() => User, (user) => user.slugs)
-    user: User;
+    user: Relation<User>;
 }

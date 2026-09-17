@@ -5,11 +5,13 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    Relation,
+    RelationId,
     Unique,
     UpdateDateColumn,
 } from "typeorm";
+import type { Relation } from "typeorm";
 import { User } from "../../user/entities/user.entity.js";
+import { Slug } from "../../slug/entities/slug.entity.js";
 
 @Entity('nooks')
 @Unique(['user', 'slug'])
@@ -21,11 +23,18 @@ export class Nook {
     @JoinColumn({ name: 'user_id' })
     user: Relation<User>;
 
-    @Column()
-    name?: string;
+    @RelationId((nook: Nook) => nook.user)
+    userId: string;
+
+    @ManyToOne(() => Slug, (slug) => slug.nooks, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'slug_id' })
+    slug: Relation<Slug>;
+
+    @RelationId((nook: Nook) => nook.slug)
+    slugId: string;
 
     @Column()
-    slug?: string;
+    name?: string;
 
     @Column({ nullable: true })
     description?: string;

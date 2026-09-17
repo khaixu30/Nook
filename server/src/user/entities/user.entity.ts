@@ -6,8 +6,9 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
-import { relation } from 'typeorm';
+import type { Relation } from "typeorm";
 import { Nook } from "../../nook/entities/nook.entity.js";
+import { Slug } from "../../slug/entities/slug.entity.js";
 
 @Entity('users')
 export class User {
@@ -40,4 +41,7 @@ export class User {
 
     @OneToMany(() => Nook, (nook) => nook.user)
     nooks: Relation<Nook[]>;
+
+    @OneToMany(() => Slug, (slug) => slug.user)
+    slugs: Relation<Slug[]>;
 }
